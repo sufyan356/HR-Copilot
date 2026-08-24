@@ -558,6 +558,7 @@ def render_auth():
             submitted = st.form_submit_button(
                 "Log in",
                 use_container_width=True,
+                key="login_submit_btn",
             )
 
         if submitted:
@@ -596,6 +597,7 @@ def render_auth():
             submitted = st.form_submit_button(
                 "Create account",
                 use_container_width=True,
+                key="signup_submit_btn",
             )
 
         if submitted:
