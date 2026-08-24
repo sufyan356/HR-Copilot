@@ -8,10 +8,10 @@ import streamlit as st
 # CONFIG
 # ============================================================
 
-API_BASE_URL = st.secrets.get("API_BASE_URL", "http://127.0.0.1:8000")
+API_BASE_URL = "http://127.0.0.1:8000"
 
 st.set_page_config(
-    page_title="HR Copilot — Acme Corp",
+    page_title="HR Copilot",
     page_icon="📘",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -545,12 +545,12 @@ def render_auth():
     tab_login, tab_signup = st.tabs(["Log in", "Sign up"])
 
     with tab_login:
-        with st.form("login_form"):
-            email = st.text_input("Email", key="login_email")
+        with st.form("login_form_unique"):
+            email = st.text_input("Email", key="unique_login_email")
             password = st.text_input(
                 "Password",
                 type="password",
-                key="login_password",
+                key="unique_login_password",
             )
             submitted = st.form_submit_button(
                 "Log in",
@@ -582,13 +582,13 @@ def render_auth():
                     st.error(result.get("message", "Login failed."))
 
     with tab_signup:
-        with st.form("signup_form"):
-            name = st.text_input("Full name", key="signup_name")
-            email = st.text_input("Email", key="signup_email")
+        with st.form("signup_form_unique"):
+            name = st.text_input("Full name", key="unique_signup_name")
+            email = st.text_input("Email", key="unique_signup_email")
             password = st.text_input(
                 "Password",
                 type="password",
-                key="signup_password",
+                key="unique_signup_password",
             )
             submitted = st.form_submit_button(
                 "Create account",
@@ -711,12 +711,12 @@ def render_auth_required(feature: str):
     col1, col2, _ = st.columns([1, 1, 2])
 
     with col1:
-        if st.button("Log in", key=f"{feature}_login"):
+        if st.button("Log in", key=f"{feature}_login_req"):
             st.session_state.page = "login"
             st.rerun()
 
     with col2:
-        if st.button("Sign up", key=f"{feature}_signup"):
+        if st.button("Sign up", key=f"{feature}_signup_req"):
             st.session_state.page = "signup"
             st.rerun()
 
@@ -817,12 +817,12 @@ def render_dashboard():
         col1, col2 = st.columns(2, gap="medium")
 
         with col1:
-            if st.button("Log in", key="dash_login", use_container_width=True):
+            if st.button("Log in", key="dash_login_btn", use_container_width=True):
                 st.session_state.page = "login"
                 st.rerun()
 
         with col2:
-            if st.button("Sign up", key="dash_signup", use_container_width=True):
+            if st.button("Sign up", key="dash_signup_btn", use_container_width=True):
                 st.session_state.page = "signup"
                 st.rerun()
 
