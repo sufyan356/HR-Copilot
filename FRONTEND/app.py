@@ -560,7 +560,7 @@ def render_auth():
             submitted = st.form_submit_button(
                 "Log in",
                 use_container_width=True,
-                key="login_submit_btn",
+                help="Sign in to your account",
             )
 
         if submitted:
@@ -599,7 +599,7 @@ def render_auth():
             submitted = st.form_submit_button(
                 "Create account",
                 use_container_width=True,
-                key="signup_submit_btn",
+                help="Create a new HR Copilot account",
             )
 
         if submitted:
