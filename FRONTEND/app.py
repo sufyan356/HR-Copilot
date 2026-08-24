@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.write(f"DEBUG API_BASE_URL = {API_BASE_URL}")  # TEMPORARY — remove after debugging
+# st.write(f"DEBUG API_BASE_URL = {API_BASE_URL}")  # TEMPORARY — remove after debugging
 
 
 # ============================================================
