@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import requests
 import streamlit as st
 
@@ -649,20 +650,20 @@ def render_sidebar():
 
         st.write("")
 
-        if st.button("⌂  Dashboard", use_container_width=True):
+        if st.button("⌂  Dashboard", key="sidebar_dashboard", use_container_width=True):
             st.session_state.page = "dashboard"
             st.rerun()
 
-        if st.button("💬  Chat", use_container_width=True):
+        if st.button("💬  Chat", key="sidebar_chat", use_container_width=True):
             require_auth("chat")
             st.rerun()
 
-        if st.button("↻  Chat History", use_container_width=True):
+        if st.button("↻  Chat History", key="sidebar_history", use_container_width=True):
             require_auth("history")
             st.rerun()
 
         if st.session_state.token:
-            if st.button("🗑  New conversation", use_container_width=True):
+            if st.button("🗑  New conversation", key="sidebar_new_conv", use_container_width=True):
                 st.session_state.messages = []
                 st.session_state.last_sources = []
                 st.session_state.page = "chat"
@@ -670,17 +671,17 @@ def render_sidebar():
 
             st.write("")
 
-            if st.button("Log out", use_container_width=True):
+            if st.button("Log out", key="sidebar_logout", use_container_width=True):
                 logout()
                 st.rerun()
         else:
             st.write("")
 
-            if st.button("Log in", use_container_width=True):
+            if st.button("Log in", key="sidebar_login", use_container_width=True):
                 st.session_state.page = "login"
                 st.rerun()
 
-            if st.button("Sign up", use_container_width=True):
+            if st.button("Sign up", key="sidebar_signup", use_container_width=True):
                 st.session_state.page = "signup"
                 st.rerun()
 
@@ -804,7 +805,7 @@ def render_dashboard():
             "You are signed in and can use Chat and Chat History."
         )
 
-        if st.button("💬 Start a conversation", use_container_width=True):
+        if st.button("💬 Start a conversation", key="dash_start_conv", use_container_width=True):
             st.session_state.page = "chat"
             st.rerun()
     else:
@@ -816,12 +817,12 @@ def render_dashboard():
         col1, col2 = st.columns(2, gap="medium")
 
         with col1:
-            if st.button("Log in", use_container_width=True):
+            if st.button("Log in", key="dash_login", use_container_width=True):
                 st.session_state.page = "login"
                 st.rerun()
 
         with col2:
-            if st.button("Sign up", use_container_width=True):
+            if st.button("Sign up", key="dash_signup", use_container_width=True):
                 st.session_state.page = "signup"
                 st.rerun()
 
@@ -871,7 +872,7 @@ def render_history():
         render_auth_required("history")
         return
 
-    if st.button("↻ Reload history"):
+    if st.button("↻ Reload history", key="reload_history_btn"):
         if load_chat_history():
             st.rerun()
 
