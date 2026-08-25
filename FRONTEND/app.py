@@ -1434,7 +1434,10 @@ import streamlit as st
 # CONFIG
 # ============================================================
 
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = st.secrets.get(
+    "API_BASE_URL",          # ← Streamlit Cloud Secret
+    "http://127.0.0.1:8000", # ← Local fallback
+).rstrip("/")
 
 st.set_page_config(
     page_title="HR Copilot — Acme Corp",
