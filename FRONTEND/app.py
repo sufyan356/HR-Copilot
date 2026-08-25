@@ -66,9 +66,7 @@ def inject_css():
             letter-spacing: -0.01em;
         }
 
-        /* ====================================================
-           SIDEBAR
-           ==================================================== */
+        /* ---------- Sidebar ---------- */
 
         [data-testid="stSidebar"] {
             background: var(--ink);
@@ -91,6 +89,8 @@ def inject_css():
             color: var(--amber) !important;
         }
 
+        /* ---------- App title block ---------- */
+
         .app-title {
             font-family: 'Fraunces', serif;
             font-size: 1.55rem;
@@ -108,13 +108,11 @@ def inject_css():
             margin-top: 2px;
         }
 
-        /* ====================================================
-           DASHBOARD
-           ==================================================== */
+        /* ---------- Dashboard ---------- */
 
         .dashboard-wrap {
             max-width: 1050px;
-            margin: 2.5rem auto 0 auto;
+            margin: 5rem auto 0 auto;
             padding: 0 1.5rem;
         }
 
@@ -149,7 +147,6 @@ def inject_css():
             border: 1px solid var(--line);
             border-radius: 14px;
             padding: 1.4rem;
-            min-height: 190px;
             height: 100%;
             box-shadow: 0 1px 2px rgba(22,35,63,0.03);
         }
@@ -193,16 +190,14 @@ def inject_css():
             font-size: 0.9rem;
         }
 
-        /* ====================================================
-           AUTH PAGE
-           ==================================================== */
+        /* ---------- Auth page ---------- */
 
         .auth-page {
-            min-height: 78vh;
+            min-height: 82vh;
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 1.5rem 1rem 2rem 1rem;
+            padding: 2rem 1rem;
         }
 
         .auth-container {
@@ -216,9 +211,7 @@ def inject_css():
             border: 1px solid var(--line);
             border-radius: 16px;
             padding: 2.5rem 2.8rem 2rem 2.8rem;
-            box-shadow:
-                0 2px 4px rgba(22,35,63,0.04),
-                0 18px 45px rgba(22,35,63,0.08);
+            box-shadow: 0 2px 4px rgba(22,35,63,0.04), 0 18px 45px rgba(22,35,63,0.08);
         }
 
         .auth-brand {
@@ -239,32 +232,7 @@ def inject_css():
             margin: 0.35rem 0 1.6rem 0;
         }
 
-        /* ====================================================
-           FORM INPUTS
-           ==================================================== */
-
-        div[data-baseweb="input"] {
-            background: #FFFFFF !important;
-        }
-
-        div[data-baseweb="input"] > div {
-            background: #FFFFFF !important;
-            border-color: var(--line) !important;
-        }
-
-        div[data-baseweb="input"] input {
-            background: #FFFFFF !important;
-            color: var(--ink) !important;
-        }
-
-        textarea {
-            background: #FFFFFF !important;
-            color: var(--ink) !important;
-        }
-
-        /* ====================================================
-           BUTTONS
-           ==================================================== */
+        /* ---------- Buttons ---------- */
 
         .stButton > button {
             background: var(--signal);
@@ -280,13 +248,10 @@ def inject_css():
             color: white;
         }
 
-        /* ====================================================
-           CHAT BUBBLES
-           ==================================================== */
+        /* ---------- Chat bubbles ---------- */
 
         .chat-row {
             display: flex;
-            width: 100%;
             margin-bottom: 14px;
         }
 
@@ -336,37 +301,7 @@ def inject_css():
             margin-bottom: 4px;
         }
 
-        /* ====================================================
-           THINKING / LOADING
-           ==================================================== */
-
-        .thinking-box {
-            background: var(--card);
-            border: 1px solid var(--line);
-            border-left: 3px solid var(--amber);
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            max-width: 72%;
-            margin-bottom: 14px;
-        }
-
-        .thinking-title {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--amber);
-            margin-bottom: 0.2rem;
-        }
-
-        .thinking-text {
-            color: var(--ash);
-            font-size: 0.9rem;
-        }
-
-        /* ====================================================
-           REFERENCE RAIL
-           ==================================================== */
+        /* ---------- Reference rail ---------- */
 
         .rail-heading {
             font-family: 'Fraunces', serif;
@@ -416,9 +351,27 @@ def inject_css():
             padding: 0.9rem;
         }
 
-        /* ====================================================
-           RESPONSIVE
-           ==================================================== */
+        /* ---------- Loading indicator ---------- */
+
+        .thinking-box {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--amber);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--ash);
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+        }
+
+        .thinking-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--amber);
+            margin-bottom: 4px;
+        }
 
         @media (max-width: 900px) {
             .auth-container {
@@ -427,12 +380,7 @@ def inject_css():
             }
 
             .dashboard-wrap {
-                margin-top: 2rem;
-            }
-
-            .bubble,
-            .thinking-box {
-                max-width: 90%;
+                margin-top: 3rem;
             }
         }
         </style>
@@ -456,24 +404,21 @@ def api_post(path: str, payload: dict, token: str = None) -> dict:
             timeout=60,
         )
 
-        try:
-            return response.json()
-        except ValueError:
-            return {
-                "status": False,
-                "error": "INVALID_RESPONSE",
-                "message": f"Backend returned HTTP {response.status_code}.",
-                "data": None,
-            }
+        return response.json()
 
     except requests.exceptions.RequestException:
         return {
             "status": False,
             "error": "CONNECTION_ERROR",
-            "message": (
-                "Could not reach the HR Copilot API. "
-                "Is the backend running?"
-            ),
+            "message": "Could not reach the HR Copilot API. Is the backend running?",
+            "data": None,
+        }
+
+    except ValueError:
+        return {
+            "status": False,
+            "error": "INVALID_RESPONSE",
+            "message": "The HR Copilot API returned an invalid response.",
             "data": None,
         }
 
@@ -488,24 +433,21 @@ def api_get(path: str, token: str = None) -> dict:
             timeout=30,
         )
 
-        try:
-            return response.json()
-        except ValueError:
-            return {
-                "status": False,
-                "error": "INVALID_RESPONSE",
-                "message": f"Backend returned HTTP {response.status_code}.",
-                "data": None,
-            }
+        return response.json()
 
     except requests.exceptions.RequestException:
         return {
             "status": False,
             "error": "CONNECTION_ERROR",
-            "message": (
-                "Could not reach the HR Copilot API. "
-                "Is the backend running?"
-            ),
+            "message": "Could not reach the HR Copilot API. Is the backend running?",
+            "data": None,
+        }
+
+    except ValueError:
+        return {
+            "status": False,
+            "error": "INVALID_RESPONSE",
+            "message": "The HR Copilot API returned an invalid response.",
             "data": None,
         }
 
@@ -542,11 +484,12 @@ def require_auth(page_name: str):
     """
     Protect Chat and Chat History while keeping the dashboard public.
     """
-    st.session_state.page = page_name
 
     if st.session_state.token:
+        st.session_state.page = page_name
         return True
 
+    st.session_state.page = page_name
     return False
 
 
@@ -581,7 +524,10 @@ def render_auth():
     )
 
     tab_login, tab_signup = st.tabs(
-        ["Log in", "Sign up"]
+        [
+            "Log in",
+            "Sign up",
+        ]
     )
 
     # --------------------------------------------------------
@@ -589,7 +535,9 @@ def render_auth():
     # --------------------------------------------------------
 
     with tab_login:
+
         with st.form("login_form"):
+
             email = st.text_input(
                 "Email",
                 key="login_email",
@@ -607,11 +555,15 @@ def render_auth():
             )
 
         if submitted:
+
             if not email or not password:
+
                 st.error(
                     "Enter your email and password."
                 )
+
             else:
+
                 result = api_post(
                     "/login",
                     {
@@ -621,6 +573,7 @@ def render_auth():
                 )
 
                 if result.get("status"):
+
                     data = result["data"]
 
                     st.session_state.token = data["token"]
@@ -631,6 +584,7 @@ def render_auth():
                     st.rerun()
 
                 else:
+
                     st.error(
                         result.get(
                             "message",
@@ -643,7 +597,9 @@ def render_auth():
     # --------------------------------------------------------
 
     with tab_signup:
+
         with st.form("signup_form"):
+
             name = st.text_input(
                 "Full name",
                 key="signup_name",
@@ -666,12 +622,15 @@ def render_auth():
             )
 
         if submitted:
+
             if not name or not email or not password:
+
                 st.error(
                     "Fill in all fields."
                 )
 
             else:
+
                 result = api_post(
                     "/signup",
                     {
@@ -682,6 +641,7 @@ def render_auth():
                 )
 
                 if result.get("status"):
+
                     data = result["data"]
 
                     st.session_state.token = data["token"]
@@ -692,6 +652,7 @@ def render_auth():
                     st.rerun()
 
                 else:
+
                     st.error(
                         result.get(
                             "message",
@@ -720,7 +681,9 @@ def render_auth():
 # ============================================================
 
 def render_sidebar():
+
     with st.sidebar:
+
         st.markdown(
             '<div class="app-title">📘 HR Copilot</div>',
             unsafe_allow_html=True,
@@ -734,6 +697,7 @@ def render_sidebar():
         st.write("")
 
         if st.session_state.token:
+
             st.write(
                 f"Signed in as **{st.session_state.user_name}**"
             )
@@ -743,92 +707,102 @@ def render_sidebar():
             )
 
         else:
+
             st.caption("Guest mode")
 
         st.write("")
 
         # ----------------------------------------------------
-        # DASHBOARD
+        # Dashboard
         # ----------------------------------------------------
 
         if st.button(
             "⌂  Dashboard",
-            key="sidebar_dashboard_button",
             use_container_width=True,
+            key="sidebar_dashboard_button",
         ):
+
             st.session_state.page = "dashboard"
             st.rerun()
 
         # ----------------------------------------------------
-        # CHAT
+        # Chat
         # ----------------------------------------------------
 
         if st.button(
             "💬  Chat",
-            key="sidebar_chat_button",
             use_container_width=True,
+            key="sidebar_chat_button",
         ):
+
             require_auth("chat")
             st.rerun()
 
         # ----------------------------------------------------
-        # CHAT HISTORY
+        # Chat History
         # ----------------------------------------------------
 
         if st.button(
             "↻  Chat History",
-            key="sidebar_history_button",
             use_container_width=True,
+            key="sidebar_history_button",
         ):
+
             require_auth("history")
             st.rerun()
 
         # ----------------------------------------------------
-        # AUTHENTICATED ACTIONS
+        # Logged-in controls
         # ----------------------------------------------------
 
         if st.session_state.token:
 
             if st.button(
                 "🗑  New conversation",
-                key="sidebar_new_conversation_button",
                 use_container_width=True,
+                key="sidebar_new_conversation_button",
             ):
+
                 st.session_state.messages = []
                 st.session_state.last_sources = []
                 st.session_state.page = "chat"
+
                 st.rerun()
 
             st.write("")
 
             if st.button(
                 "Log out",
-                key="sidebar_logout_button",
                 use_container_width=True,
+                key="sidebar_logout_button",
             ):
+
                 logout()
                 st.rerun()
 
         # ----------------------------------------------------
-        # GUEST ACTIONS
+        # Guest controls
         # ----------------------------------------------------
 
         else:
+
             st.write("")
 
             if st.button(
                 "Log in",
-                key="sidebar_login_button",
                 use_container_width=True,
+                key="sidebar_login_button",
             ):
+
                 st.session_state.page = "login"
                 st.rerun()
 
             if st.button(
                 "Sign up",
-                key="sidebar_signup_button",
                 use_container_width=True,
+                key="sidebar_signup_button",
             ):
+
                 st.session_state.page = "signup"
                 st.rerun()
 
@@ -840,21 +814,26 @@ def render_sidebar():
 def render_auth_required(feature: str):
 
     if feature == "history":
+
         title = "Chat history requires an account"
+
         message = (
             "Please log in or sign up first to view "
             "your previous conversations."
         )
+
     else:
+
         title = "Chat requires an account"
+
         message = (
-            "Please log in or sign up first to use "
-            "HR Copilot."
+            "Please log in or sign up first to use HR Copilot."
         )
 
     st.markdown(
         f"""
         <div class="auth-required">
+
             <div class="auth-required-title">
                 🔒 {title}
             </div>
@@ -862,6 +841,7 @@ def render_auth_required(feature: str):
             <div class="auth-required-text">
                 {message}
             </div>
+
         </div>
         """,
         unsafe_allow_html=True,
@@ -872,18 +852,22 @@ def render_auth_required(feature: str):
     )
 
     with col1:
+
         if st.button(
             "Log in",
             key=f"{feature}_login_button",
         ):
+
             st.session_state.page = "login"
             st.rerun()
 
     with col2:
+
         if st.button(
             "Sign up",
             key=f"{feature}_signup_button",
         ):
+
             st.session_state.page = "signup"
             st.rerun()
 
@@ -901,32 +885,34 @@ def render_dashboard():
 
     st.markdown(
         '<div class="dashboard-kicker">'
-        'Acme Corp · Employee Handbook'
-        '</div>',
+        "Acme Corp · Employee Handbook"
+        "</div>",
         unsafe_allow_html=True,
     )
 
     st.markdown(
         '<div class="dashboard-title">'
-        'HR decisions, made simpler.'
-        '</div>',
+        "HR decisions, made simpler."
+        "</div>",
         unsafe_allow_html=True,
     )
 
     st.markdown(
         """
         <div class="dashboard-subtitle">
+
             HR Copilot helps employees find answers from company HR policies,
             including leave, work from home, probation, notice period,
             reimbursement, holidays, and exit policies.
+
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # ========================================================
-    # DASHBOARD CARDS
-    # ========================================================
+    # --------------------------------------------------------
+    # Dashboard cards
+    # --------------------------------------------------------
 
     col1, col2, col3 = st.columns(
         3,
@@ -934,6 +920,7 @@ def render_dashboard():
     )
 
     with col1:
+
         st.markdown(
             """
             <div class="dashboard-card">
@@ -957,6 +944,7 @@ def render_dashboard():
         )
 
     with col2:
+
         st.markdown(
             """
             <div class="dashboard-card">
@@ -980,6 +968,7 @@ def render_dashboard():
         )
 
     with col3:
+
         st.markdown(
             """
             <div class="dashboard-card">
@@ -1005,9 +994,9 @@ def render_dashboard():
     st.write("")
     st.write("")
 
-    # ========================================================
-    # LOGGED-IN USER
-    # ========================================================
+    # --------------------------------------------------------
+    # Logged-in dashboard
+    # --------------------------------------------------------
 
     if st.session_state.token:
 
@@ -1018,15 +1007,16 @@ def render_dashboard():
 
         if st.button(
             "💬 Start a conversation",
-            key="dashboard_start_conversation_button",
             use_container_width=True,
+            key="dashboard_start_conversation_button",
         ):
+
             st.session_state.page = "chat"
             st.rerun()
 
-    # ========================================================
-    # GUEST USER
-    # ========================================================
+    # --------------------------------------------------------
+    # Guest dashboard
+    # --------------------------------------------------------
 
     else:
 
@@ -1041,20 +1031,24 @@ def render_dashboard():
         )
 
         with col1:
+
             if st.button(
                 "Log in",
-                key="dashboard_login_button",
                 use_container_width=True,
+                key="dashboard_login_button",
             ):
+
                 st.session_state.page = "login"
                 st.rerun()
 
         with col2:
+
             if st.button(
                 "Sign up",
-                key="dashboard_signup_button",
                 use_container_width=True,
+                key="dashboard_signup_button",
             ):
+
                 st.session_state.page = "signup"
                 st.rerun()
 
@@ -1076,17 +1070,17 @@ def load_chat_history():
     )
 
     if not result.get("status"):
+
         st.error(
             result.get(
                 "message",
                 "Could not load chat history.",
             )
         )
+
         return False
 
-    data = result.get("data") or {}
-
-    history = data.get("history", [])
+    history = result["data"]["history"]
 
     messages = []
 
@@ -1095,20 +1089,14 @@ def load_chat_history():
         messages.append(
             {
                 "role": "user",
-                "content": item.get(
-                    "user_query",
-                    "",
-                ),
+                "content": item["user_query"],
             }
         )
 
         messages.append(
             {
                 "role": "assistant",
-                "content": item.get(
-                    "bot_response",
-                    "",
-                ),
+                "content": item["bot_response"],
             }
         )
 
@@ -1128,60 +1116,17 @@ def render_history():
     )
 
     if not st.session_state.token:
+
         render_auth_required("history")
         return
 
     if st.button(
         "↻ Reload history",
-        key="history_reload_button",
+        key="reload_history_button",
     ):
+
         if load_chat_history():
             st.rerun()
-
-    # Automatically load history if empty
-    # This allows the page to show saved messages
-    # immediately after opening Chat History.
-    if not st.session_state.messages:
-
-        result = api_get(
-            "/chat-history",
-            token=st.session_state.token,
-        )
-
-        if result.get("status"):
-
-            data = result.get("data") or {}
-
-            history = data.get(
-                "history",
-                [],
-            )
-
-            messages = []
-
-            for item in history:
-
-                messages.append(
-                    {
-                        "role": "user",
-                        "content": item.get(
-                            "user_query",
-                            "",
-                        ),
-                    }
-                )
-
-                messages.append(
-                    {
-                        "role": "assistant",
-                        "content": item.get(
-                            "bot_response",
-                            "",
-                        ),
-                    }
-                )
-
-            st.session_state.messages = messages
 
     if not st.session_state.messages:
 
@@ -1263,7 +1208,7 @@ def render_bubble(
 
 
 # ============================================================
-# FILE ICONS
+# SOURCE ICONS
 # ============================================================
 
 FILE_ICONS = {
@@ -1296,31 +1241,21 @@ def render_source_chip(source: dict):
         or ""
     ).lstrip(".")
 
-    raw_file_type = (
-        source.get("file_type")
-        or ""
-    )
-
     icon = FILE_ICONS.get(
-        raw_file_type,
-        FILE_ICONS.get(
-            file_type,
-            "📎",
-        ),
+        source.get("file_type", ""),
+        "📎",
     )
 
     if source.get("page_number") is not None:
 
         ref = (
-            f"PAGE "
-            f"{source['page_number']}"
+            f"PAGE {source['page_number']}"
         )
 
     elif source.get("row_number") is not None:
 
         ref = (
-            f"ROW "
-            f"{source['row_number']}"
+            f"ROW {source['row_number']}"
         )
 
     else:
@@ -1356,15 +1291,15 @@ def render_reference_rail():
 
     st.markdown(
         '<div class="rail-heading">'
-        'References'
-        '</div>',
+        "References"
+        "</div>",
         unsafe_allow_html=True,
     )
 
     st.markdown(
         '<div class="rail-sub">'
-        'Cited in the latest answer'
-        '</div>',
+        "Cited in the latest answer"
+        "</div>",
         unsafe_allow_html=True,
     )
 
@@ -1384,30 +1319,6 @@ def render_reference_rail():
     for source in st.session_state.last_sources:
 
         render_source_chip(source)
-
-
-# ============================================================
-# THINKING / LOADING UI
-# ============================================================
-
-def render_thinking():
-
-    st.markdown(
-        """
-        <div class="thinking-box">
-
-            <div class="thinking-title">
-                HR Copilot
-            </div>
-
-            <div class="thinking-text">
-                🔎 Searching HR policy documents and preparing your answer...
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
 
 # ============================================================
@@ -1431,6 +1342,10 @@ def render_chat():
         gap="large",
     )
 
+    # ========================================================
+    # CHAT AREA
+    # ========================================================
+
     with col_chat:
 
         st.markdown(
@@ -1453,7 +1368,7 @@ def render_chat():
             )
 
         # ----------------------------------------------------
-        # Chat input
+        # User input
         # ----------------------------------------------------
 
         prompt = st.chat_input(
@@ -1462,9 +1377,9 @@ def render_chat():
 
         if prompt:
 
-            # ------------------------------------------------
-            # Show user question
-            # ------------------------------------------------
+            # -----------------------------------------------
+            # Show user message immediately
+            # -----------------------------------------------
 
             st.session_state.messages.append(
                 {
@@ -1473,28 +1388,30 @@ def render_chat():
                 }
             )
 
-            # ------------------------------------------------
-            # Immediately display current question
-            # ------------------------------------------------
-
-            render_bubble(
-                "user",
-                prompt,
-            )
-
-            # ------------------------------------------------
-            # Loading / thinking message
-            # ------------------------------------------------
+            # -----------------------------------------------
+            # Thinking / loading message
+            # -----------------------------------------------
 
             thinking_placeholder = st.empty()
 
-            with thinking_placeholder:
+            thinking_placeholder.markdown(
+                """
+                <div class="thinking-box">
 
-                render_thinking()
+                    <div class="thinking-title">
+                        HR Copilot
+                    </div>
 
-            # ------------------------------------------------
-            # Call FastAPI
-            # ------------------------------------------------
+                    Thinking about your HR policy question...
+
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            # -----------------------------------------------
+            # Call FastAPI backend
+            # -----------------------------------------------
 
             result = api_post(
                 "/chat",
@@ -1504,25 +1421,18 @@ def render_chat():
                 token=st.session_state.token,
             )
 
-            # Remove thinking message
+            # Remove loading message
             thinking_placeholder.empty()
 
-            # ------------------------------------------------
+            # -----------------------------------------------
             # Successful response
-            # ------------------------------------------------
+            # -----------------------------------------------
 
             if result.get("status"):
 
-                data = result.get(
-                    "data"
-                ) or {}
+                answer = result["data"]["answer"]
 
-                answer = data.get(
-                    "answer",
-                    "I could not generate an answer.",
-                )
-
-                sources = data.get(
+                sources = result["data"].get(
                     "sources",
                     [],
                 )
@@ -1536,9 +1446,9 @@ def render_chat():
 
                 st.session_state.last_sources = sources
 
-            # ------------------------------------------------
+            # -----------------------------------------------
             # Error response
-            # ------------------------------------------------
+            # -----------------------------------------------
 
             else:
 
@@ -1556,10 +1466,6 @@ def render_chat():
                 )
 
                 st.session_state.last_sources = []
-
-            # ------------------------------------------------
-            # Rerun to display final response
-            # ------------------------------------------------
 
             st.rerun()
 
@@ -1603,6 +1509,7 @@ def render_page():
     else:
 
         st.session_state.page = "dashboard"
+
         st.rerun()
 
 
