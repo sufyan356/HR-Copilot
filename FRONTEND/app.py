@@ -1,4 +1,4 @@
-# """
+﻿# """
 # HR Copilot — Streamlit frontend
 
 # A thin UI layer over the FastAPI backend:
@@ -1434,13 +1434,10 @@ import streamlit as st
 # CONFIG
 # ============================================================
 
-API_BASE_URL = st.secrets.get(
-    "API_BASE_URL",          # ← Streamlit Cloud Secret
-    "http://127.0.0.1:8000", # ← Local fallback
-).rstrip("/")
+API_BASE_URL = "https://hr-copilot-production.up.railway.app"
 
 st.set_page_config(
-    page_title="HR Copilot — Acme Corp",
+    page_title="HR Copilot",
     page_icon="📘",
     layout="wide",
     initial_sidebar_state="expanded",
