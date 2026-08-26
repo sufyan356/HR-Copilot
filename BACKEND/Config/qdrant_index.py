@@ -71,6 +71,18 @@ def get_qdrant_client() -> QdrantClient:
             "Initializing Qdrant client..."
         )
 
+        # TEMPORARY DEBUGGING
+        # Do NOT print the actual API key.
+        print(
+            "QDRANT_URL:",
+            repr(QDRANT_URL)
+        )
+
+        print(
+            "QDRANT_API_KEY exists:",
+            bool(QDRANT_API_KEY)
+        )
+
         _qdrant_client = QdrantClient(
             url=QDRANT_URL,
             api_key=QDRANT_API_KEY,
